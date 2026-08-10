@@ -4,11 +4,11 @@
 
 ## 1. 生成 FIPER pkl
 
-推荐使用 `lerobot11`（本仓库 `lerobot/` 目录里的代码），必须用 `python -m lerobot.scripts.lerobot_eval`，不要用 `lerobot-eval` 控制台命令，后者会指向旧版源码。
+推荐使用 `lerobot`（本仓库 `lerobot/` 目录里的代码），用 `python -m lerobot.scripts.lerobot_eval`，或者用 `lerobot-eval` 控制台命令
 
 ```bash
-cd /home/zhiyuanjia/lerobot11
-export PYTHONPATH=/home/zhiyuanjia/lerobot11/src
+cd /home/zhiyuanjia/lerobot
+export PYTHONPATH=/home/zhiyuanjia/lerobot/src
 export MUJOCO_GL=osmesa
 export HF_HUB_OFFLINE=1
 export TRANSFORMERS_OFFLINE=1
