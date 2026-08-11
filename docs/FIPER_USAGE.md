@@ -4,7 +4,7 @@
 
 ## 1. 生成 FIPER pkl
 
-推荐使用 `lerobot`（本仓库 `lerobot/` 目录里的代码），用 `python -m lerobot.scripts.lerobot_eval`，或者用 `lerobot-eval` 控制台命令
+使用 `lerobot`，用 `python -m lerobot.scripts.lerobot_eval`，或者用 `lerobot-eval` 控制台命令
 
 ```bash
 cd /home/zhiyuanjia/lerobot
