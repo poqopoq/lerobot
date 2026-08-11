@@ -4,18 +4,16 @@
 
 - 流程：LeRobot 生成轨迹 / FIPER pkl → FIPER 做失败检测。
 - `/home/zhiyuanjia/lerobot`（旧版）：验证可用，模型 `lerobot/pi05_libero_finetuned`，支持 `--save_fiper_rollouts`，不支持 `--save_trajectories`。
-- `/home/zhiyuanjia/lerobot11`（新版）：源码在 `src/lerobot`，必须用 `python -m lerobot.scripts.lerobot_eval`，不能用 `lerobot-eval` 控制台命令（它会指向旧版源码）；支持 `--save_trajectories` 和 `--save_fiper_rollouts`。之前新版遇到 tokenizer 在线下载超时、成功率异常的问题。
-- 当前推荐：用旧版 `/home/zhiyuanjia/lerobot` 生成 pkl（已验证 5 条小批量成功率 80%）。
+- `/home/zhiyuanjia/lerobot11`（新版）；支持 `--save_trajectories` 和 `--save_fiper_rollouts`。
 
 ## 2. 生成 FIPER pkl 的命令（旧版）
 
 ```bash
 cd /home/zhiyuanjia/lerobot
-export PYTHONPATH=/home/zhiyuanjia/lerobot/src
 export MUJOCO_GL=osmesa
 export HF_HUB_OFFLINE=1
 export TRANSFORMERS_OFFLINE=1
-/home/zhiyuanjia/miniconda3/envs/lerobot/bin/python -m lerobot.scripts.lerobot_eval \
+lerobot_eval \
   --policy.path=lerobot/pi05_libero_finetuned \
   --policy.compile_model=false \
   --policy.gradient_checkpointing=false \
@@ -37,11 +35,10 @@ export TRANSFORMERS_OFFLINE=1
 
 ```bash
 cd /home/zhiyuanjia/lerobot11
-export PYTHONPATH=/home/zhiyuanjia/lerobot11/src
 export MUJOCO_GL=osmesa
 export HF_HUB_OFFLINE=1
 export TRANSFORMERS_OFFLINE=1
-/home/zhiyuanjia/miniconda3/envs/lerobot/bin/python -m lerobot.scripts.lerobot_eval \
+lerobot_eval \
   --policy.path=<模型路径> \
   --env.type=libero \
   --env.task=libero_10 \
@@ -53,7 +50,6 @@ export TRANSFORMERS_OFFLINE=1
   --fiper_rollouts_dir=/path/to/output
 ```
 
-注意：跑 lerobot11 时不要敲 `lerobot-eval`，必须用 `python -m lerobot.scripts.lerobot_eval`。
 
 ## 4. FIPER pkl 格式
 
@@ -86,7 +82,6 @@ export TRANSFORMERS_OFFLINE=1
 ```bash
 conda activate fiper
 cd /home/zhiyuanjia/fiper
-export LD_LIBRARY_PATH="$CONDA_PREFIX/lib:$LD_LIBRARY_PATH"
 python scripts/run_fiper.py
 ```
 
@@ -99,18 +94,7 @@ python scripts/results_generation.py
 
 绘图开关在 `/home/zhiyuanjia/fiper/configs/results/base.yaml`，包括 `uncertainty_plots`、`quantile_impact`、`rollout_type_stats` 等的 `create_plots`。
 
-失败检测警告视频（视频中叠加 rnd-oe 原始分 / 归一化分以及失败判定）：
 
-```bash
-cd /home/zhiyuanjia/fiper
-python scripts/generate_warning_videos.py \
-  --method rnd_oe \
-  --task mytask \
-  --threshold_style tvt_cp_band \
-  --quantile 0.9 \
-  --window 45 \
-  --fps 10
-```
 
 ## 6. 当前数据（2026-08-09 划分后）
 
